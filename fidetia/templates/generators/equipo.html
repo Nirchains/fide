@@ -1,0 +1,28 @@
+{% extends "templates/web.html" %} 
+{% block breadcrumbs %} 
+	{% include "templates/includes/breadcrumbs.html" %} 
+{% endblock %} 
+{% block page_content %}
+<div class="col-sm-12">
+	<div class="list-hero">
+		<h2>{{title}}</h2>
+	</div>
+	<article class="team-work">
+		{% if lines_filtered|length > 0 %}
+		<h4>Líneas tecnológicas:</h4>
+		<div class="lines">
+			<ul>
+			{% for item in lines_filtered %}
+	            <li>{{ item.title }}</li>
+	    	{% endfor %}
+	    	</ul>
+		</div>
+		<p class="director-equipo"><b>Director del equipo de trabajo:</b> </p>
+		<p class=""><b>Más información:</b></p>
+	{% endif %}
+	</article>
+</div>
+<script>
+    frappe.ready(function() { frappe.set_search_path("/equipos"); })
+</script>
+{% endblock %}

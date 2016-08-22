@@ -1,0 +1,17 @@
+{% include 'templates/includes/cms/modules_head.html' %}
+
+{% if module.module_type == "Html" %}
+	{% include 'templates/includes/cms/module_html.html' %}
+{% endif%}
+
+{% if module.module_type == "Noticias" %}
+	{% include 'templates/includes/cms/module_news.html' %}
+{% endif%}
+
+{% if module.module_type == "Menu" %}
+	{% include 'templates/includes/cms/module_menu.html' %}
+{% endif%}
+
+{% if module.module_type == "Include" %}
+	{% include module.include %}
+{% endif%}

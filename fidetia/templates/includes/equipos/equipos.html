@@ -1,0 +1,34 @@
+{% extends "templates/web.html" %}
+
+{%- block header -%} {{ header or "" }} {%- endblock -%}
+
+{% block title %} {% if page_title %} {{ page_title }} {% endif %} {% endblock %}
+
+{% block hero %}{% endblock %}
+
+{% block breadcrumbs %} 
+	{% include "templates/includes/breadcrumbs.html" %} 
+{% endblock %} 
+
+{% block page_content %}
+{% if title %}
+	<div class="list-hero">
+		<h2>
+			{{ title }}
+		</h2>
+	</div>
+{% endif %}
+<div class="col-sm-12">
+	<div class="news-list-content equipos">
+		<div id="news-list">
+			{% include "templates/includes/list/list.html" %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}

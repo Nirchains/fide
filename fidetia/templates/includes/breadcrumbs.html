@@ -1,0 +1,21 @@
+{% if parents and parents|length > 0 or show_breadcrumbs %}
+<div class="col-sm-12">
+	<div class="page-breadcrumbs" data-html-block="breadcrumbs">
+		<ul class="breadcrumb">
+			{#
+			<!-- 
+			<li>
+				<span class="icon icon-angle-left"></span>
+				<a href="{{ url_prefix }}{{ parents[-1].name | abs_url }}">
+				{{ parents[-1].page_title or parents[-1].title or "" }}</a>
+			</li> -->
+			#}
+			<li><a href="/">Inicio</a></li>
+			{% for parent in parents %}
+				<li><a href="{{ parent.name | abs_url }}">{{ parent.page_title or parent.title or "" }}</a></li>
+			{% endfor %}
+			<li class="active">{{ page_title or "" }}</li>
+		</ul>
+	</div>
+</div>
+{% endif %}

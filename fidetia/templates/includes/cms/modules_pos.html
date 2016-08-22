@@ -1,0 +1,9 @@
+{% if module_positions and module_positions[pos]|length > 0 %}
+<div class="{{pos|lower}}-content{% if positions_size %} col-sm-{{positions_size[pos]}} {% endif %}">
+	{% for module in module_positions[pos] %}
+		<div class="{{module.css_class or ""}}">
+		{% include 'templates/includes/cms/modules.html' %}
+		</div>
+	{% endfor%}
+</div>
+{% endif %}

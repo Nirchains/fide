@@ -1,0 +1,23 @@
+ul.cl-effect-1 > li > a::before,
+ul.cl-effect-1 > li > a::after {
+  display: inline-block;
+  opacity: 0;
+  transition: transform 0.3s ease 0s, opacity 0.2s ease 0s;
+}
+ul.cl-effect-1 > li > a::before {
+  content: "[";
+  margin-right: 10px;
+  transform: translateX(20px);
+}
+ul.cl-effect-1 > li > a::after {
+  content: "]";
+  margin-left: 10px;
+  transform: translateX(-20px);
+}
+ul.cl-effect-1 > li > a:hover::before,
+ul.cl-effect-1 > li > a:hover::after,
+ul.cl-effect-1 > li > a:focus::before,
+.cl-effect-1 > li > a:focus::after {
+  opacity: 1;
+  transform: translateX(0px);
+}

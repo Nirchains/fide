@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+
+{%- block header -%} {{ header or "" }} {%- endblock -%}
+
+{% block title %} {{ categoryTitle or "Noticias" }}{% endblock %}
+
+{% block hero %}{{ hero or "" }}{% endblock %}
+
+{% block breadcrumbs %} 
+	{% include "templates/includes/breadcrumbs.html" %} 
+{% endblock %} 
+
+{% block sidebar %} 
+	{% include "templates/includes/noticias/categorias.html" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="col-sm-{{positions_size["Content"]}}">
+	{% if categoryTitle %}
+	<div class="list-hero">
+		<h2>
+			{{ categoryTitle }}
+		</h2>
+	</div>
+	{% endif %}
+	<div class="news-list-content noticias">
+		<div id="news-list">
+			{% include "templates/includes/list/list.html" %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>{% include "templates/includes/list/list.js" %}</script>
+{% endblock %}
+
+{% block style %}
+<style>
+.page-content {
+	padding: 0px;
+}
+</style>
+{% endblock %}

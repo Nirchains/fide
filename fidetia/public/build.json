@@ -1,0 +1,18 @@
+{
+	"css/fidetia.css": [
+		"public/css/base.css",
+		"public/css/effects.css",
+		"public/css/fidetia.css",
+		"public/css/file-icons.css",
+		"public/css/animate.min.css"
+	],
+	"js/fidetia.js": [
+		"public/js/fidetia.js"
+	],
+	"js/common.js": [
+		"public/js/common.js"
+	],
+	"js/curriculum.js": [
+		"public/js/curriculum.js"
+	]
+}

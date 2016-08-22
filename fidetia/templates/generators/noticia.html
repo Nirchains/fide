@@ -1,0 +1,40 @@
+{% extends "templates/web.html" %}
+
+{%- block header -%} {{ header or "" }} {%- endblock -%}
+
+{% block hero %}{{ hero or "" }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% if not no_breadcrumbs %}
+    {% include "templates/includes/breadcrumbs.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+<div class="col-sm-{{positions_size["Content"]}}">
+	<div class="list-hero">
+		<h2>{{title}}</h2>
+	</div>
+	<article class="news-content" itemscope itemtype="http://schema.org/NewsArticle">
+		<div itemprop="articleBody" class="news-text">
+			{{ content }}
+		</div>
+		{% include "templates/includes/noticias/adjuntos.html" %}
+	    <p class="text-muted news-category">
+	    	Publicado el {{ frappe.format_date(published_on) }} / 
+	        Categoría: <a href="/noticias/{{ objcategory.route }}">
+	             <b>{{ _("{0}").format(category) }}</b></a>
+	    </p>
+	</article>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+{{ style or "" }}
+</style>
+{% endblock %}
+
+{% block script %}
+    <script>{{ script or "" }}</script>
+{% endblock %}

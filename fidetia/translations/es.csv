@@ -1,0 +1,9 @@
+DocType: Fidetia,Message,Mensaje
+DocType: Fidetia,Email Id,Correo electrónico
+DocType: Communication,Open,Abierto
+DocType: Fidetia,Poll,Encuestas
+apps/frappe/frappe/core/doctype/user/user.py +430,Registration Details Emailed.,Le hemos enviado por correo electrónico los detalles para que complete su registro.
+apps/frappe/frappe/templates/emails/new_user.html +6,Complete Registration,Completar registro
+apps/erpnext/erpnext/templates/pages/edit_profile.html +3,My Profile,Mi Perfil
+apps/frappe/frappe/templates/pages/update-password.html +65,Password Updated,Contraseña Actualizada
+apps/frappe/frappe/public/js/frappe/misc/pretty_date.js +45,Today,Hoy

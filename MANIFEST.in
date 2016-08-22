@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include fidetia *.css
+recursive-include fidetia *.csv
+recursive-include fidetia *.html
+recursive-include fidetia *.ico
+recursive-include fidetia *.js
+recursive-include fidetia *.json
+recursive-include fidetia *.md
+recursive-include fidetia *.png
+recursive-include fidetia *.py
+recursive-include fidetia *.svg
+recursive-include fidetia *.txt
+recursive-exclude fidetia *.pyc

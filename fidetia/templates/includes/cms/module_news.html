@@ -1,0 +1,25 @@
+{% if module.news %}
+	{% if module.news|length > 0 %}
+		{% for post in module.news %}
+<div class="web-list-item noticias">
+	<div class="row noticias-row">
+		<div class="col-sm-12">
+			<div class="text-muted small post-meta">
+				{{ frappe.format_date(post.published_on) }} /
+	            <a href="/noticias/{{ post.category_route }}">{{ post.category }}</a>
+	            {% if post.important == 1 %}
+				<span class="important pull-right"><i class="icon-star"></i> Importante</span>
+				{% endif %}
+	        </div>
+		</div>
+		<div class="col-sm-12">
+			<p><a href="/{{ post.route }}">{{ post.title }}</a></p>
+		</div>
+	</div>
+</div>
+		{% endfor%}
+<div class="row show-more-news readmore col-xs-12"><a class="btn" href="/noticias">+ Noticias</a></div>
+	{% else %}
+		<p>No hay noticias</p>
+	{% endif %}
+{% endif %}

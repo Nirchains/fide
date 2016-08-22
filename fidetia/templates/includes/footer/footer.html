@@ -1,0 +1,79 @@
+<div class="web-footer-menu">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<ul class="list-inline">
+					{% for item in footer_items %}
+					<li><a href="{{ item.url }}" {{ item.target }}
+						data-label="{{ item.label }}">{{ item.label }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="web-footer">
+	<section class="footer-links">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-sm-5 certificaciones">
+					<p>
+						<a href="/files/Cert_9001.pdf" target="_blank"><img src="/files/logo_aenor_iso_9001_100.gif" alt="Aenor ISO-9001" data-toggle="tooltip" data-original-title="Iso 9001" ></a>
+						<a href="/files/Cert_14001.pdf" target="_blank"><img src="/files/logo_aenor_iso_14001_100.gif" alt="Aenor ISO-14001" data-toggle="tooltip" data-original-title="Iso 14001" ></a>
+						<a href="/files/Cert_166002.pdf" target="_blank"><img src="/files/logo_aenor_iso_166002_100.gif" alt="Aenor ISO-166002" data-toggle="tooltip" data-original-title="Iso 166002" ></a>
+						<a href="/files/Cert_27001.pdf" target="_blank"><img src="/files/logo_aenor_iso_27001_100.gif" alt="Aenor ISO-27001" data-toggle="tooltip" data-original-title="Iso 27001" ></a>
+					</p>
+				</div>
+				<div class="col-md-7 col-sm-5 text-right">
+					<p>{% if footer_address %}{{ footer_address }}{% endif %}</p>
+				</div>
+				{% if copyright %}
+				<div class="col-md-1 col-sm-2 text-right">
+					<p><div class="web-footer-copyright small">&copy; {{ copyright }}</p></div>
+				</div>
+				{% endif %}
+			</div>
+			{% if timetable %}
+			<div class="row timetable">
+				<div class="col-xs-12">
+					<p class="text-center"><b>Horario: </b> {{ timetable }} </p>
+				</div>
+			</div>
+			{% endif %}
+			<div class="row">
+				<div class="col-sm-4 text-right">
+					{% if facebook_share or google_plus_one or twitter_share or linked_in_share %}
+					<div class="social-icons text-muted small" style="margin-bottom: 15px;">
+						<span>
+                            {{ share_text or "Share this page on: "}}</span>
+						{% if google_plus_one %}
+							<a href="https://plus.google.com/share?url={{ url }}"
+							 	target="_blank"><i class="icon-google-plus"></i></a>
+						{% endif %}
+						{% if twitter_share %}
+							<a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ encoded_title }}"
+								target="_blank" ><i class="icon-twitter"></i></a>
+						{% endif %}
+						{% if facebook_share %}
+							<a href="https://www.facebook.com/sharer.php?u={{ url }}&t={{ encoded_title }}&via={{ twitter_share_via }}"
+								target="_blank"><i class="icon-facebook"></i></a>
+						{% endif %}
+						{% if linked_in_share %}
+							<a href="http://www.linkedin.com/shareArticle?mini=true&url={{ url }}&title={{ encoded_title }}"
+								target="_blank"><i class="icon-linkedin"></i></a>
+						{% endif %}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	{% if not hide_footer_signup %}
+	<section>
+		{% block extension %}
+		{% include "templates/includes/footer/footer_extension.html" %}
+		{% endblock %}
+	</section>
+	{% endif %}
+</footer>
