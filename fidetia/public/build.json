@@ -12,7 +12,16 @@
 	"js/common.js": [
 		"public/js/common.js"
 	],
+	"js/fidetia_desk.js": [
+		"public/js/fidetia_desk.js"
+	],
 	"js/curriculum.js": [
 		"public/js/curriculum.js"
+	],
+	"js/login/login.js": [
+		"public/js/login/login.js"
+	],
+	"css/login.css": [
+		"public/css/login.css"
 	]
 }

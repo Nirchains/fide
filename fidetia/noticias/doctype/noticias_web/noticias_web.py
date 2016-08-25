@@ -75,12 +75,14 @@ class NoticiasWeb(WebsiteGenerator):
 		
 		context.attachements_filtered = [elem for elem in context.attachements if elem.visible == 1]
 	
+		#Miga de pan
 		context.objcategory = frappe.db.get_value("Noticias Categoria", context.doc.category, ["title", "route"], as_dict=1)
 		context.parents = [
 						{"title": "Noticias", "name": "noticias"}, 
 						{"title": context.objcategory.title, "name": "noticias/{0}".format(context.objcategory.route)}
 		]
 		
+		#Barra lateral
 		page_modules = []
 		include = "templates/includes/noticias/categorias.html"
 		module = Module("Include", "Left", 0, "", include, "") 

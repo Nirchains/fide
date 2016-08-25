@@ -8,6 +8,9 @@
 		<h2>{{title}}</h2>
 	</div>
 	<article class="team-work">
+		{% if certificate %}
+			<p class="bg-info">{{ certificate }}</p>
+		{% endif %}
 		{% if lines_filtered|length > 0 %}
 		<h4>Líneas tecnológicas:</h4>
 		<div class="lines">
@@ -17,12 +20,9 @@
 	    	{% endfor %}
 	    	</ul>
 		</div>
+		{% endif %}
 		<p class="director-equipo"><b>Director del equipo de trabajo:</b> </p>
-		<p class=""><b>Más información:</b></p>
-	{% endif %}
+		{% include "templates/includes/noticias/adjuntos.html" %}
 	</article>
 </div>
-<script>
-    frappe.ready(function() { frappe.set_search_path("/equipos"); })
-</script>
 {% endblock %}

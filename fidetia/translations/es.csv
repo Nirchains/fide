@@ -1,3 +1,11 @@
+apps/fidetia/fidetia/www/login.html +73,Have an account? ,¿Ya tienes una cuenta?
+apps/fidetia/fidetia/www/login.html +73,Login,Inicia sesión
+apps/fidetia/fidetia/www/login.html +58,Dont have an account? ,¿No tienes cuenta?
+apps/fidetia/fidetia/www/login.html +71,Sign up,Regístrate
+apps/fidetia/fidetia/www/login.html +77,Register,Registro
+apps/fidetia/fidetia/www/login.html +28,Sign in,Acceder
+apps/fidetia/fidetia/www/login.html +20,Email address,Correo electrónico
+apps/frappe/frappe/utils/password_strength.py +160,Common names and surnames are easy to guess.,Nombres y apellidos comunes son fáciles de adivinar.
 DocType: Fidetia,Message,Mensaje
 DocType: Fidetia,Email Id,Correo electrónico
 DocType: Communication,Open,Abierto

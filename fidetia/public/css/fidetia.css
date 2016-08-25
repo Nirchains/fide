@@ -400,3 +400,16 @@ ul.top-nav-bar > li > a {
     background-color: #FFFFFF !important;
   }
 }
+.password-strength-indicator {
+  float: right;
+  padding: 15px;
+  margin-top: -38px;
+  margin-right: -7px;
+}
+.password-strength-message {
+  margin-top: -10px;
+}
+.bg-info {
+  background-color: #d9edf7;
+  padding: 15px;
+}

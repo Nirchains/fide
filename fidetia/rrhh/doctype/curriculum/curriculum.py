@@ -43,13 +43,17 @@ class Curriculum(Document):
 def date_diference(date_init=None, date_finish=None, in_progress=None):
 	from datetime import datetime
 
-	if (date_init and date_finish) or (date_init and in_progress == "1"):
+	diference = ""
+
+	if (date_init and date_finish) or (date_init and int(in_progress or 0) == 1):
 		formato = "%Y-%m-%d"
-		date_i = datetime.strptime(date_init, formato)
+
+		date_i = datetime.strptime(str(date_init), formato)
 		if date_finish:
-			date_f = datetime.strptime(date_finish, formato)
+			date_f = datetime.strptime(str(date_finish), formato)
 		else:
 			date_f = datetime.now()
+
 		seconds = (date_f - date_i).total_seconds()
 		days = (date_f - date_i).days
 
@@ -84,9 +88,22 @@ def date_diference(date_init=None, date_finish=None, in_progress=None):
 				diference = diference + "es"
 		else:
 			diference = year_diference(date_i, date_f)
-	else:
-		diference = ""
+	
 	return {"exc": False, "response": diference}
+
+def update_date_diferences():
+	doctype = "Curriculum Experiencia Profesional"
+	#TODOPFG: Actualizar consulta con estado
+	exp_prof_db = frappe.db.sql((""" select date_init, date_finish, in_progress
+		from `tab{0}` where in_progress=1 
+		""").format(doctype), as_dict=True)
+	for item in exp_prof_db:
+		date_dif = date_diference(item.date_init, item.date_finish, item.in_progress)
+		if not date_dif["exc"]:
+			frappe.db.sql((""" update
+				`tab{0}`
+				set `time_in_job`='{1}' 
+				""").format(doctype, date_dif["response"]))
 
 def month_diference(d1, d2):
 	from calendar import monthrange

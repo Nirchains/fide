@@ -44,6 +44,7 @@ class EquiposdeTrabajo(WebsiteGenerator):
 		}
 	
 		context.lines_filtered = [elem for elem in context.lines if elem.visible == 1]
+		context.attachements_filtered = [elem for elem in context.attachements if elem.visible == 1]
 	
 		context.parents = [
 			{"title": "Áreas I+D+I", "name": "areas-i-d-i"}

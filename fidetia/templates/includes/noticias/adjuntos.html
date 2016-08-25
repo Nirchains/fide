@@ -5,6 +5,8 @@
 		{% for item in attachements_filtered %}
 			{% if item.type == "Fichero adjunto" %}
             <li><a href="{{ item.attach }}" target="_blank" class="link-icon">{{ item.title }}</a></li>
+            {% elif item.type == "Correo electrónico" %}
+            <li><a href="mailto:{{ item.url }}" target="_top"><span class="icon-envelope"></span> {{ item.title }}</a></li>
             {% else %}
             <li><a href="{{ item.url }}" target="_blank" class="link-icon link">{{ item.title }}</a></li>
             {% endif %}
