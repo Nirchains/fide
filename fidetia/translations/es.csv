@@ -5,6 +5,7 @@ apps/fidetia/fidetia/www/login.html +71,Sign up,Regístrate
 apps/fidetia/fidetia/www/login.html +77,Register,Registro
 apps/fidetia/fidetia/www/login.html +28,Sign in,Acceder
 apps/fidetia/fidetia/www/login.html +20,Email address,Correo electrónico
+apps/fidetia/fidetia/www/edit-profile.html +20,Last name is required,Campo apellidos obligatorio
 apps/frappe/frappe/utils/password_strength.py +160,Common names and surnames are easy to guess.,Nombres y apellidos comunes son fáciles de adivinar.
 DocType: Fidetia,Message,Mensaje
 DocType: Fidetia,Email Id,Correo electrónico
@@ -15,3 +16,8 @@ apps/frappe/frappe/templates/emails/new_user.html +6,Complete Registration,Compl
 apps/erpnext/erpnext/templates/pages/edit_profile.html +3,My Profile,Mi Perfil
 apps/frappe/frappe/templates/pages/update-password.html +65,Password Updated,Contraseña Actualizada
 apps/frappe/frappe/public/js/frappe/misc/pretty_date.js +45,Today,Hoy
+DocType: Top Bar Item,Right,Derecha
+DocType: Web Page,Left,Izquierda
+DocType: Web Page,Top,Arriba
+DocType: Web Page,Bottom,Abajo
+apps/frappe/frappe/public/js/legacy/form.js +375,See on Website,Ver en sitio web

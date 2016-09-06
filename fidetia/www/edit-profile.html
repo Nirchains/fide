@@ -1,0 +1,65 @@
+{% extends "templates/web.html" %}
+
+{% block title %} {{ "Edit Profile" }} {% endblock %}
+
+{% block header %}<h2>{{ _("Edit Profile") }}</h2>{% endblock %}
+
+{% block page_content %}
+<div class="user-content" style="max-width: 500px; padding: 50px 0px;">
+	<div class="alert alert-warning message" style="display: none;"></div>
+	<form role = "form">
+		<fieldset>
+			<label>{{ _("Name") }}</label>
+			<input class="form-control" type="text" id="first_name" value="{{ user.first_name or "" }}" required>
+		</fieldset>
+		<fieldset>
+			<label>{{ _("Last Name") }}</label>
+			<input class="form-control" type="text" id="last_name" value="{{ user.last_name or "" }}" required>
+		</fieldset>
+		<fieldset>
+			<label>{{ _("Phone") }}</label>
+			<input class="form-control" type="text" id="phone" value="{{ user.phone or "" }}">
+		</fieldset>
+		<button type="submit" class="btn btn-default" id="update_user">{{ _("Update") }}</button>
+	</form>
+</div>
+
+<script type="text/javascript">
+
+frappe.ready(function(){
+	$("#update_user").on("click",function(){
+		var first_name = document.getElementById("first_name").value;
+		var last_name = document.getElementById("last_name").value;
+		var phone = document.getElementById("phone").value;
+
+		frappe.call({
+			type: "POST",
+			method: "fidetia.www.edit_profile.update_user",
+			btn: $("#update_user"),
+			args: {
+				first_name: first_name,
+				last_name: last_name,
+				phone: phone
+			},
+			callback: function(r) {
+				if(r.message) {
+					if (!r.message.exc) {
+						frappe.msgprint(__(r.message.response));
+						setTimeout(function() {
+							window.location.href = "/edit-profile";
+						},2000);
+					} else {
+						frappe.msgprint(r.message.response);
+					}
+				}
+			}
+
+		});
+		return false;
+
+	});
+
+});
+</script>
+
+{% endblock %}

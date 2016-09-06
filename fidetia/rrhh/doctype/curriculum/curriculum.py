@@ -10,8 +10,14 @@ from frappe.model.document import Document
 STANDARD_USERS = ("Guest", "Administrator")
 
 class Curriculum(Document):
+	
 	def autoname(self):
 		"""set name as email id"""
+		user = frappe.session.user
+		
+		if not self.email:
+			self.email = user.name
+
 		if self.name not in STANDARD_USERS:
 			self.email = self.email.strip()
 			self.name = self.email

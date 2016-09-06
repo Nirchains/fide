@@ -24,6 +24,7 @@ def sign_up_extended(email, first_name, last_name):
 			"email": email,
 			"first_name": first_name,
 			"last_name": last_name,
+			"full_name": get_fullname(user),
 			"enabled": 1,
 			"new_password": random_string(10),
 			"user_type": "Website User"
@@ -76,6 +77,11 @@ def update_password(new_password, key=None, old_password=None):
 			return redirect_url if redirect_url else "/"
 	else:
 		return pstrength['response']
+
+def get_fullname(user):
+	"""get first_name space last_name"""
+	return (user.first_name or '') + \
+		(user.first_name and " " or '') + (user.last_name or '')
 
 def reset_user_data(user):
 	user_doc = frappe.get_doc("User", user)

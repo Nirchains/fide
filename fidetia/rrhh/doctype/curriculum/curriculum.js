@@ -5,12 +5,19 @@ frappe.provide("fidetia.rrhh");
 
 frappe.ui.form.on('Curriculum', {
 	refresh: function(frm) {
-		
+		if (frm.email !== frappe.boot.user.email) {
+			alert(frappe.boot.user.email);
+			var df = frappe.meta.get_docfield(doc.doctype, "payment_gateway", doc.name);
+			df.read_only = 1;
+		} else {
+			alert("Usuario distinto");
+		}
 	}
 });
 
 fidetia.rrhh.Curriculum = frappe.ui.form.Controller.extend({
-	onload: function() {
+	onload: function(frm) {
+		
 	},
 	professional_experience_on_form_rendered: function (doc, grid_row) {
 	},
