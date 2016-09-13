@@ -21,7 +21,19 @@
 	    	</ul>
 		</div>
 		{% endif %}
-		<p class="director-equipo"><b>Director del equipo de trabajo:</b> </p>
+		{% if director_full_name %}
+		<p class="director-equipo"><b>Director/a del equipo de trabajo:</b> {{ director_full_name }} ({{ director }})</p>
+		{% endif %}
+		{% if members_filtered|length > 0 %}
+		<h4>Miembros:</h4>
+		<div class="members">
+			<ul>
+			{% for item in members_filtered %}
+	            <li>{{ item.member_full_name }}</li>
+	    	{% endfor %}
+	    	</ul>
+		</div>
+		{% endif %}
 		{% include "templates/includes/noticias/adjuntos.html" %}
 	</article>
 </div>

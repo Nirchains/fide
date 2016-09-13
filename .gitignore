@@ -4,3 +4,5 @@
 *.swp
 tags
 fidetia/docs/current
+/fidetia/fidetia/doctype/lista_de_usuarios/lista_de_usuarios.json
+/fidetia/fidetia/doctype/lista_de_usuarios/lista_de_usuarios.py

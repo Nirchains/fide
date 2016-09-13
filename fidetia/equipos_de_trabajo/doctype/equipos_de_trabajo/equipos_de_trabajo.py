@@ -45,6 +45,7 @@ class EquiposdeTrabajo(WebsiteGenerator):
 	
 		context.lines_filtered = [elem for elem in context.lines if elem.visible == 1]
 		context.attachements_filtered = [elem for elem in context.attachements if elem.visible == 1]
+		context.members_filtered = [elem for elem in context.members if elem.visible == 1]
 	
 		context.parents = [
 			{"title": "Áreas I+D+I", "name": "areas-i-d-i"}
@@ -68,7 +69,7 @@ def get_team_list(doctype, txt=None, filters=None, limit_start=0, limit_page_len
 	
 	query = """\
 		select
-			t1.title, t1.name, route
+			t1.title, t1.name, t1.route, t1.director_full_name, t1.director
 		from `tabEquipos de Trabajo` t1
 		where ifnull(t1.published,0)=1
 		%(condition)s

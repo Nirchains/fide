@@ -105,8 +105,7 @@ login.login_handlers = (function() {
 					}
 				}) || []).join('<br>') || default_message;
 			}
-
-			frappe.msgprint(message);
+			frappe.msgprint(message, "Error de acceso");
 		};
 	}
 
@@ -131,7 +130,7 @@ login.login_handlers = (function() {
 				frappe.msgprint(data.message);
 			}
 		},
-		401: get_error_handler(__("Invalid Login")),
+		401: get_error_handler(__("Usuario o clave incorrectos")),
 		417: get_error_handler(__("Oops! Something went wrong"))
 	};
 

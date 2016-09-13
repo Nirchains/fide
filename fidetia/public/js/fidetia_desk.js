@@ -28,3 +28,43 @@ frappe.ui.Page = frappe.ui.Page.extend({
 	}
 });
 
+frappe.form.formatters.Link = function(value, docfield, options, doc) {
+	var doctype = docfield._options || docfield.options;
+	var original_value = value;
+	if(value && value.match(/^['"].*['"]$/)) {
+		value.replace(/^.(.*).$/, "$1");
+	}
+
+	if(options && options.for_print) {
+		return value;
+	}
+
+	if(frappe.form.link_formatters[doctype]) {
+		value = frappe.form.link_formatters[doctype](value, doc);
+	}
+
+	if(!value) {
+		return "";
+	}
+	if(docfield && docfield.link_onclick) {
+		return repl('<a onclick="%(onclick)s">%(value)s</a>',
+			{onclick: docfield.link_onclick.replace(/"/g, '&quot;'), value:value});
+	} else if(docfield && doctype) {
+		return repl('<a class="grey" href="#Form/%(doctype)s/%(name)s" data-doctype="%(doctype)s" title="%(label)s">%(label)s</a>', {
+			doctype: encodeURIComponent(doctype),
+			name: encodeURIComponent(original_value),
+			label: __(options && options.label || value)
+		});
+	} else {
+		return value;
+	}
+}
+
+frappe.form.link_formatters['Titulaciones'] = function(value, doc) {
+	if(doc.nombre && doc.nombre !== value) {
+		return value + ': ' + doc.nombre;
+	} else {
+		return value;
+	}
+}
+

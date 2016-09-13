@@ -25,12 +25,12 @@ $(document).ready(function() {
 $(window).scroll(function() {
 	if ($(this).scrollTop() > 200){  
 	    $('#navbar').addClass("scrolled");
-	    $('#navbar').addClass('animated slideInDown');
+	    $('#navbar').addClass('animated fadeIn');
 	    $('.hero-and-content').addClass("scrolled");
 	  }
 	  else{
 	    $('#navbar').removeClass("scrolled");
-	    $('#navbar').removeClass('slideInDown');
+	    $('#navbar').removeClass('fadeIn');
 	    $('.hero-and-content').removeClass("scrolled");
 	  }
 });
@@ -41,4 +41,12 @@ if ($("#the-carousel").length > 0) {
 
 function check_menu(menu) {
 	$(".web-footer-copyright").html($(menu).parent().parent().html());
+}
+
+frappe.msgprint = function(html, title) {
+    if(html.substr(0,1)==="[") html = JSON.parse(html);
+    if($.isArray(html)) {
+        html = html.join("<hr>")
+    }
+    return frappe.get_modal(title || "Mensaje", html).modal("show");
 }

@@ -10,9 +10,4 @@ from frappe.utils import flt, getdate
 from frappe.model.document import Document
 
 class CurriculumExperienciaProfesional(Document):
-	def validate(self):
-		frappe.throw(_("End Date can not be less than Start Date"))
-		self.validate_dates()
-
-	def validate_dates(self):
-		frappe.throw(_("End Date can not be less than Start Date"))
+	pass

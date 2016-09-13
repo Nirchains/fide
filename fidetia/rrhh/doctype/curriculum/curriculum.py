@@ -10,6 +10,13 @@ from frappe.model.document import Document
 STANDARD_USERS = ("Guest", "Administrator")
 
 class Curriculum(Document):
+
+	def onload(self):
+		if not has_rrhh_permission():
+			user = frappe.db.get_value("User", frappe.session.user, ["email", "first_name", "last_name"], as_dict=True)
+			self.first_name = user.first_name or self.first_name
+			self.last_name = user.last_name or self.last_name
+			self.email = user.email or self.email
 	
 	def autoname(self):
 		"""set name as email id"""
@@ -30,6 +37,9 @@ class Curriculum(Document):
 			if not self.dni_valid(self.ndoc):
 				frappe.throw("El número de documento de indentidad introducido no es válido. Recuerde utilizar el formato 12345678X para DNI y X12345678Y para NIE.")
 
+		if not self.data_protection:
+			frappe.throw("Debe aceptar la política de protección de datos")
+
 	def dni_valid(self, dni):
 	    tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
 	    dig_ext = "XYZ"
@@ -45,15 +55,34 @@ class Curriculum(Document):
 	            and tabla[int(dni)%23] == dig_control
 	    return False
 
+	#TODOPFG para no duplicar curriculum
+	def validate_duplicate_user(self):
+		employee = frappe.db.sql_list("""select name from `tabCurriculum` where
+			user_id=%s and status='Active' and name!=%s""", (self.user_id, self.name))
+		if employee:
+			throw(_("User {0} is already assigned to Employee {1}").format(
+				self.user_id, employee[0]), frappe.DuplicateEntryError)
+
+@frappe.whitelist()
+def has_rrhh_permission():
+	return ('RRHH' in frappe.get_roles())
+
 @frappe.whitelist()
 def date_diference(date_init=None, date_finish=None, in_progress=None):
 	from datetime import datetime
 
 	diference = ""
+	err_msg = ""
+	data_has_error = ""
+	formato = "%Y-%m-%d"
 
-	if (date_init and date_finish) or (date_init and int(in_progress or 0) == 1):
-		formato = "%Y-%m-%d"
+	if (date_init and int(in_progress or 0) == 0): #Solo se ha rellenado la fecha de inicio
+		date_i = datetime.strptime(str(date_init), formato)
+		if date_i > datetime.now():
+			err_msg = "La fecha de inicio no puede ser superior a la fecha actual"
+			data_has_error = "date_init"
 
+	if (date_init and date_finish) or (date_init and int(in_progress or 0) == 1): #Se han rellenado todos los datos necesarios
 		date_i = datetime.strptime(str(date_init), formato)
 		if date_finish:
 			date_f = datetime.strptime(str(date_finish), formato)
@@ -63,8 +92,6 @@ def date_diference(date_init=None, date_finish=None, in_progress=None):
 		seconds = (date_f - date_i).total_seconds()
 		days = (date_f - date_i).days
 
-		err_msg = ""
-		data_has_error = ""
 		if date_i > datetime.now():
 			err_msg = "La fecha de inicio no puede ser superior a la fecha actual"
 			data_has_error = "date_init"
@@ -74,10 +101,6 @@ def date_diference(date_init=None, date_finish=None, in_progress=None):
 		elif days < 0:
 			err_msg = "La fecha de fin no puede ser inferior a la fecha de inicio"
 			data_has_error = "date_finish"
-
-		if err_msg != "":
-			frappe.msgprint(err_msg)
-			return {"exc": True, "response": "", "error": err_msg, "data_has_error": data_has_error}
 
 		if days < 7:
 			diference = (_("{0} día").format(days))
@@ -95,7 +118,11 @@ def date_diference(date_init=None, date_finish=None, in_progress=None):
 		else:
 			diference = year_diference(date_i, date_f)
 	
-	return {"exc": False, "response": diference}
+	if err_msg != "":
+		frappe.msgprint(err_msg)
+		return {"exc": True, "response": "", "error": err_msg, "data_has_error": data_has_error}
+	else:
+		return {"exc": False, "response": diference}
 
 def update_date_diferences():
 	doctype = "Curriculum Experiencia Profesional"

@@ -5,24 +5,49 @@ frappe.provide("fidetia.rrhh");
 
 frappe.ui.form.on('Curriculum', {
 	refresh: function(frm) {
-		if (frm.email !== frappe.boot.user.email) {
-			alert(frappe.boot.user.email);
-			var df = frappe.meta.get_docfield(doc.doctype, "payment_gateway", doc.name);
-			df.read_only = 1;
-		} else {
-			alert("Usuario distinto");
-		}
+		cur_frm.cscript.curriculum.set_toggle(frm, 0)
+		frappe.call({
+			type: "GET",
+			method: "fidetia.rrhh.doctype.curriculum.curriculum.has_rrhh_permission",
+			args: {},
+			callback: function(r) {
+				if (r.message) {
+					cur_frm.cscript.curriculum.set_toggle(frm, 1);
+				}
+			}
+		});
 	}
 });
 
+cur_frm.cscript.curriculum = {
+	set_toggle: function(frm, value) {
+		frm.toggle_enable("email", value);
+		frm.toggle_enable("first_name", value);
+		frm.toggle_enable("last_name", value);
+	}
+}
+
 fidetia.rrhh.Curriculum = frappe.ui.form.Controller.extend({
 	onload: function(frm) {
+		
+	},
+	validate: function (frm) {
 		
 	},
 	professional_experience_on_form_rendered: function (doc, grid_row) {
 	},
 	set_time_in_job: function() {
 		
+	},
+	data_protection: function(frm) {
+		if (!frm.data_protection) {
+			var msg = {
+				message: "Debe aceptar la política de protección de datos",
+				title: "Mensaje de validación",
+				indicator: "red"
+			}
+			frappe.msgprint(msg);
+		}
 	}
 });
 cur_frm.script_manager.make(fidetia.rrhh.Curriculum);
