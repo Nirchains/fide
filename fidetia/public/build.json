@@ -6,6 +6,9 @@
 		"public/css/file-icons.css",
 		"public/css/animate.min.css"
 	],
+	"css/fidetia-desk.css": [
+		"public/css/fidetia.css"
+	],
 	"js/fidetia.js": [
 		"public/js/fidetia.js"
 	],

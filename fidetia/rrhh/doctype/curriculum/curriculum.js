@@ -6,6 +6,7 @@ frappe.provide("fidetia.rrhh");
 frappe.ui.form.on('Curriculum', {
 	refresh: function(frm) {
 		cur_frm.cscript.curriculum.set_toggle(frm, 0)
+		//Comprobamos si el usuario tiene permiso para editar los datos personales del curriculum
 		frappe.call({
 			type: "GET",
 			method: "fidetia.rrhh.doctype.curriculum.curriculum.has_rrhh_permission",
@@ -24,6 +25,9 @@ cur_frm.cscript.curriculum = {
 		frm.toggle_enable("email", value);
 		frm.toggle_enable("first_name", value);
 		frm.toggle_enable("last_name", value);
+	},
+	reset_validate: function(frm) {
+		
 	}
 }
 
@@ -32,7 +36,18 @@ fidetia.rrhh.Curriculum = frappe.ui.form.Controller.extend({
 		
 	},
 	validate: function (frm) {
-		
+		var dyearf = frappe.meta.get_docfield("Curriculum formacion reglada", "year_finish", frm.name).reqd = false;
+		var dpercent = frappe.meta.get_docfield("Curriculum formacion reglada", "percent_complete", frm.name).reqd = false;
+		var dcourse = frappe.meta.get_docfield("Curriculum formacion reglada", "course", frm.name).reqd = false;
+		var dprovince = frappe.meta.get_docfield("Curriculum formacion reglada", "province_studies", frm.doc.name).reqd = false;
+
+		var df = frappe.meta.get_docfield("Curriculum Experiencia Profesional", "date_finish", frm.doc.name).reqd = false;
+				
+		$.each(this.frm.doc["formal_training"] || [], function(i, item) {
+			if (!item.in_progress) {
+				item.percent_complete = 100;
+			}
+		});
 	},
 	professional_experience_on_form_rendered: function (doc, grid_row) {
 	},
@@ -56,6 +71,7 @@ cur_frm.script_manager.make(fidetia.rrhh.Curriculum);
 frappe.ui.form.on('Curriculum formacion reglada', {
 	form_render: function (frm, cdt, cdn) {
 		cur_frm.cscript.curriculum_formacion_reglada.check_course_province(frm, cdt, cdn);
+		cur_frm.cscript.curriculum_formacion_reglada.check_in_progress(frm, cdt, cdn);
 	},
 	title: function(frm, cdt, cdn) {
 		cur_frm.cscript.curriculum_formacion_reglada.check_course_province(frm, cdt, cdn);
@@ -153,3 +169,27 @@ cur_frm.cscript.curriculum_experiencia_profesional = {
 		});
 	}
 }
+
+
+frappe.ui.form.on('Curriculum Idiomas', {
+	idioma: function (frm, cdt, cdn) {
+		var d = frappe.get_doc(cdt, cdn);
+		//Buscamos los duplicados
+		var count = 0;
+		$.each(frm.doc["curriculum_languages"] || [], function(i, item) {
+			if (item.idioma == d.idioma) {
+				count++;
+			}
+		});
+		if (count > 1) {
+			d.idioma = '';
+			cur_frm.refresh_fields();
+			var msg = {
+				message: "El idioma indicado está duplicado",
+				title: "Mensaje de validación",
+				indicator: "red"
+			}
+			frappe.msgprint(msg);
+		}
+	}
+});

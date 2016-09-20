@@ -15,7 +15,7 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-#app_include_css = "/assets/fidetia/css/fidetia.css"
+app_include_css = "/assets/fidetia/css/fidetia-desk.css"
 app_include_js = ["/assets/js/common.js", "/assets/js/fidetia_desk.js"]
 
 # include js, css files in header of web template
