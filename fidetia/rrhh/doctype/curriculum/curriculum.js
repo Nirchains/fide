@@ -39,9 +39,9 @@ fidetia.rrhh.Curriculum = frappe.ui.form.Controller.extend({
 		var dyearf = frappe.meta.get_docfield("Curriculum formacion reglada", "year_finish", frm.name).reqd = false;
 		var dpercent = frappe.meta.get_docfield("Curriculum formacion reglada", "percent_complete", frm.name).reqd = false;
 		var dcourse = frappe.meta.get_docfield("Curriculum formacion reglada", "course", frm.name).reqd = false;
-		var dprovince = frappe.meta.get_docfield("Curriculum formacion reglada", "province_studies", frm.doc.name).reqd = false;
+		var dprovince = frappe.meta.get_docfield("Curriculum formacion reglada", "province_studies", frm.name).reqd = false;
 
-		var df = frappe.meta.get_docfield("Curriculum Experiencia Profesional", "date_finish", frm.doc.name).reqd = false;
+		var datefinish = frappe.meta.get_docfield("Curriculum Experiencia Profesional", "date_finish", frm.name).reqd = false;
 				
 		$.each(this.frm.doc["formal_training"] || [], function(i, item) {
 			if (!item.in_progress) {
