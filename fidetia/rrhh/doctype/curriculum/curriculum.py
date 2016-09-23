@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from fidetia.utils.utils import dni_valid
 
 STANDARD_USERS = ("Guest", "Administrator")
 
@@ -34,26 +35,11 @@ class Curriculum(Document):
 			self.owner = self.email
 
 		if self.tdoc == "NIF" or self.tdoc == "NIF Extranjero":
-			if not self.dni_valid(self.ndoc):
+			if not dni_valid(self.ndoc):
 				frappe.throw("El número de documento de indentidad introducido no es válido. Recuerde utilizar el formato 12345678X para DNI y X12345678Y para NIE.")
 
 		if not self.data_protection:
 			frappe.throw("Debe aceptar la política de protección de datos")
-
-	def dni_valid(self, dni):
-	    tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
-	    dig_ext = "XYZ"
-	    reemp_dig_ext = {'X':'0', 'Y':'1', 'Z':'2'}
-	    numeros = "1234567890"
-	    dni = dni.upper()
-	    if len(dni) == 9:
-	        dig_control = dni[8]
-	        dni = dni[:8]
-	        if dni[0] in dig_ext:
-	            dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
-	        return len(dni) == len([n for n in dni if n in numeros]) \
-	            and tabla[int(dni)%23] == dig_control
-	    return False
 
 	#TODOPFG para no duplicar curriculum
 	def validate_duplicate_user(self):
