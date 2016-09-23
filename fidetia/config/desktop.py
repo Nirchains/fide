@@ -14,28 +14,28 @@ def get_data():
 		{
 			"module_name": "Noticias",
 			"color": "#3498db",
-			"icon": "octicon octicon-repo",
+			"icon": "octicon octicon-rss",
 			"type": "module",
 			"label": _("Noticias")
 		},
 		{
 			"module_name": "Mantenimiento",
-			"color": "#3498db",
-			"icon": "octicon octicon-repo",
+			"color": "#b13535",
+			"icon": "octicon octicon-database",
 			"type": "module",
 			"label": _("Mantenimiento")
 		},
 		{
 			"module_name": "Equipos de trabajo",
-			"color": "#3498db",
-			"icon": "octicon octicon-repo",
+			"color": "#8813b9",
+			"icon": "octicon octicon-link",
 			"type": "module",
 			"label": _("Equipos de trabajo")
 		},
 		{
 			"module_name": "RRHH",
-			"color": "#3498db",
-			"icon": "octicon octicon-repo",
+			"color": "#b99413",
+			"icon": "octicon octicon-organization",
 			"type": "module",
 			"label": _("Recursos Humanos")
 		}

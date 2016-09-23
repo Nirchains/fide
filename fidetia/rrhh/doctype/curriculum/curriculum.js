@@ -4,6 +4,9 @@
 frappe.provide("fidetia.rrhh");
 
 frappe.ui.form.on('Curriculum', {
+	onload: function(frm) {
+		
+	},
 	refresh: function(frm) {
 		cur_frm.cscript.curriculum.set_toggle(frm, 0)
 		//Comprobamos si el usuario tiene permiso para editar los datos personales del curriculum
