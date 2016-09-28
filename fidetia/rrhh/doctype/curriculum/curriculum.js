@@ -5,9 +5,18 @@ frappe.provide("fidetia.rrhh");
 
 frappe.ui.form.on('Curriculum', {
 	onload: function(frm) {
+		/*frm.set_query('title', 'formal_training', function(doc, cdt, cdn) {
+			var d  = locals[cdt][cdn];
+			return {
+				"filters": {
+					"name": "MATCOM"
+				}
+			};
+		});*/
 		
 	},
 	refresh: function(frm) {
+		
 		cur_frm.cscript.curriculum.set_toggle(frm, 0)
 		//Comprobamos si el usuario tiene permiso para editar los datos personales del curriculum
 		frappe.call({
@@ -173,6 +182,29 @@ cur_frm.cscript.curriculum_experiencia_profesional = {
 	}
 }
 
+frappe.ui.form.on('Curriculum Conocimientos', {
+	knowledge: function (frm, cdt, cdn) {
+		var d = frappe.get_doc(cdt, cdn);
+		var conocimiento = d.knowledge;
+		//Buscamos los duplicados
+		var count = 0;
+		$.each(frm.doc["knowledges"] || [], function(i, item) {
+			if (item.knowledge == conocimiento) {
+				count++;
+			}
+		});
+		if (count > 1) {
+			d.knowledge = '';
+			cur_frm.refresh_fields();
+			var msg = {
+				message: "Ya ha introducido el conocimiento " + conocimiento,
+				title: "Mensaje de validación",
+				indicator: "red"
+			}
+			frappe.msgprint(msg);
+		}
+	}
+});
 
 frappe.ui.form.on('Curriculum Idiomas', {
 	idioma: function (frm, cdt, cdn) {
