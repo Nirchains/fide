@@ -28,6 +28,56 @@ frappe.ui.Page = frappe.ui.Page.extend({
 	}
 });
 
+_f.Frm.prototype.setup = function() {
+
+	var me = this;
+	this.fields = [];
+	this.fields_dict = {};
+	this.state_fieldname = frappe.workflow.get_state_fieldname(this.doctype);
+
+	// wrapper
+	this.wrapper = this.parent;
+	var singlecolumn = this.meta.hide_toolbar;
+	if (frappe.boot.user.user_type=="Website User") {
+		singlecolumn = 1;
+	}
+	frappe.ui.make_app_page({
+		parent: this.wrapper,
+		single_column: singlecolumn
+	});
+	this.page = this.wrapper.page;
+	this.layout_main = this.page.main.get(0);
+
+	this.toolbar = new frappe.ui.form.Toolbar({
+		frm: this,
+		page: this.page
+	});
+
+	// print layout
+	this.setup_print_layout();
+
+	// 2 column layout
+	this.setup_std_layout();
+
+	// client script must be called after "setup" - there are no fields_dict attached to the frm otherwise
+	this.script_manager = new frappe.ui.form.ScriptManager({
+		frm: this
+	});
+	this.script_manager.setup();
+	this.watch_model_updates();
+
+	if(!this.meta.hide_toolbar) {
+		this.footer = new frappe.ui.form.Footer({
+			frm: this,
+			parent: $('<div>').appendTo(this.page.main.parent())
+		})
+		$("body").attr("data-sidebar", 1);	
+	}
+	this.setup_drag_drop();
+
+	this.setup_done = true;
+}
+
 frappe.form.formatters.Link = function(value, docfield, options, doc) {
 	var doctype = docfield._options || docfield.options;
 	var original_value = value;
