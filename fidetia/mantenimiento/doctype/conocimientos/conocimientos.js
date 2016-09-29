@@ -3,6 +3,5 @@
 
 frappe.ui.form.on('Conocimientos', {
 	refresh: function(frm) {
-
 	}
 });
