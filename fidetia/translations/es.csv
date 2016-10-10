@@ -26,3 +26,4 @@ apps/frappe/frappe/public/js/frappe/form/templates/grid_body.html +14,Add new ro
 apps/frappe/frappe/core/doctype/user/user.py +518,Already Registered,Ya está registrado. Si no recuerda su contraseña puede reestablecerla en el siguiente enlace: <a href="/login#forgot" target="_parent">Reestablecer contraseña</a>
 apps/frappe/frappe/config/website.py +7,Web Site,Sitio web
 apps/frappe/frappe/website/js/website.js +375,Switch To Desk,Intranet
+apps/frappe/frappe/public/js/frappe/views/communication.js +444,Dear,Estimado/a

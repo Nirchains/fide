@@ -13,10 +13,17 @@ frappe.ui.form.on('Curriculum', {
 				}
 			};
 		});*/
-		
+
 	},
 	refresh: function(frm) {
-		
+		if ((frappe.boot.user.user_type=="System User") && !frm.doc.__islocal == 1 ){
+			frm.get_docfield('photo').hidden = true;
+			frm.refresh_fields();
+		}
+		if ((frappe.boot.user.user_type=="Website User") && frm.doc.__islocal == 1 ){
+			frm.get_docfield('first_name').reqd = false;
+			frm.get_docfield('last_name').reqd = false;
+		}
 		cur_frm.cscript.curriculum.set_toggle(frm, 0)
 		//Comprobamos si el usuario tiene permiso para editar los datos personales del curriculum
 		frappe.call({
@@ -90,6 +97,16 @@ frappe.ui.form.on('Curriculum formacion reglada', {
 	},
 	in_progress: function(frm, cdt, cdn) {
 		cur_frm.cscript.curriculum_formacion_reglada.check_in_progress(frm, cdt, cdn);
+		var d = frappe.get_doc(cdt, cdn);
+		if (d.in_progress == 1) {
+			d.percent_complete = 0;
+			d.course = '';
+			d.year_finish = '';
+		} else {
+			d.percent_complete = 100;
+			d.course = 'Finalizado';
+		}
+		cur_frm.refresh_fields();
 	}
 });
 

@@ -3,8 +3,13 @@
 # MIT License. See license.txt
 
 from __future__ import unicode_literals
+import frappe
 from frappe import _
 import zxcvbn
+
+def check_desktop_permission(doctype):
+    if frappe.db.get_value("User", frappe.session.user, "user_type")=="Website User" and doctype != "Curriculum":
+        raise frappe.PermissionError
 
 def dni_valid(dni):
     tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
@@ -20,3 +25,7 @@ def dni_valid(dni):
         return len(dni) == len([n for n in dni if n in numeros]) \
             and tabla[int(dni)%23] == dig_control
     return False
+
+@frappe.whitelist(allow_guest=True)
+def throw_permission_error():
+    frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
