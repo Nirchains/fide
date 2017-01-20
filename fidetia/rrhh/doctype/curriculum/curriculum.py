@@ -21,10 +21,11 @@ class Curriculum(Document):
 	
 	def autoname(self):
 		"""set name as email id"""
-		user = frappe.session.user
+		user = frappe.db.get_value("User", frappe.session.user, ["email", "first_name", "last_name"], as_dict=True)
 		
-		if not self.email:
-			self.email = user.name
+		self.email = self.email or user.email
+		self.first_name = self.first_name or user.first_name
+		self.last_name = self.last_name or user.last_name
 
 		if self.name not in STANDARD_USERS:
 			self.email = self.email.strip()
@@ -40,6 +41,9 @@ class Curriculum(Document):
 
 		if not self.data_protection:
 			frappe.throw("Debe aceptar la política de protección de datos")
+
+	def on_update(self):
+		frappe.msgprint("El curriculum se ha actualizado con éxito")
 
 	#TODOPFG para no duplicar curriculum
 	def validate_duplicate_user(self):
@@ -152,3 +156,6 @@ def year_diference(d1, d2):
     else:
     	ret_months = ""
     return ret_years + ret_months
+
+def has_website_permission(doc, ptype, user, verbose=False):
+	return doc.owner==user

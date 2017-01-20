@@ -32,6 +32,30 @@ fidetia.db = {
 	}
 }
 
+fidetia.curriculum = {
+	set_full_name_from_curriculum: function (frm, cdt, cdn, docname, destin) {
+		//Actualiza el nombre completo del usuario. Docname es el nombre del campo origen en el formulario, 
+		//y destin el lugar donde colocará el nombre completo
+		var d = frappe.get_doc(cdt, cdn);
+		frappe.call({
+			type: "GET",
+			method: "frappe.client.get",
+			args: {
+				doctype: "Curriculum",
+				name: d[docname]
+			},
+			callback: function(r) {
+				if (!r.message.exc) {
+					d[destin] = r.message.first_name + ' ' + r.message.last_name;
+					refresh_field(destin, cdn, "members");
+				} else {
+					//error
+				}
+			}
+		});
+	}
+}
+
 fidetia.help = {
 	IsNull: function (obj) {
         return (obj === null || obj === undefined || obj === 'undefined');

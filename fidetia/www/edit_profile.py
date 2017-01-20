@@ -29,14 +29,14 @@ def update_user(first_name, last_name, phone=None):
 	user = frappe.get_doc('User', frappe.session.user)
 	user.first_name = first_name
 	user.last_name = last_name
-	user.full_name = get_fullname(user)
+	user.full_name = get_fullname(first_name, last_name)
 	user.phone = phone
 	user.save(ignore_permissions=True)
 
 	frappe.local.cookie_manager.set_cookie("full_name", user.full_name)
 
 	if error_msg == "":
-		return {"exc": False, "response": _("Updated")}
+		return {"exc": False, "response": _("Sus datos han sido actualizados")}
 	else:
 		return {"exc": True, "response": error_msg }
 

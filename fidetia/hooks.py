@@ -48,6 +48,17 @@ website_route_rules = [
 # automatically create page for each record of this doctype
 website_generators = ["Noticias Web", "Equipos de Trabajo"]
 
+
+portal_menu_items = [
+	{"title": "Editar perfil", "route": "/edit-profile"},
+	{"title": "Curriculums", "route": "/curriculum", "reference_doctype": "Curriculum"},
+	{"title": "Curriculum", "route": "/curriculum-web", "target": "_"}
+]
+
+has_website_permission = {
+	"Curriculum": "fidetia.rrhh.doctype.curriculum.curriculum.has_website_permission"
+}
+
 # Installation
 # ------------
 

@@ -8,7 +8,7 @@
  "docstatus": 0, 
  "doctype": "DocType", 
  "document_type": "Document", 
- "editable_grid": 1, 
+ "editable_grid": 0, 
  "fields": [
   {
    "allow_on_submit": 0, 
@@ -98,7 +98,7 @@
  "issingle": 0, 
  "istable": 1, 
  "max_attachments": 0, 
- "modified": "2016-09-28 10:04:04.056539", 
+ "modified": "2016-09-29 11:47:23.161854", 
  "modified_by": "Administrator", 
  "module": "RRHH", 
  "name": "Curriculum Conocimientos", 
