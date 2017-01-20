@@ -71,7 +71,9 @@ frappe.ui.Page = frappe.ui.Page.extend({
 		this.indicator = this.wrapper.find(".indicator");
 
 		this.page_actions = this.wrapper.find(".page-actions");
+
 		this.checked_items_status = this.page_actions.find(".checked-items-status");
+
 		this.btn_primary = this.page_actions.find(".primary-action");
 		this.btn_secondary = this.page_actions.find(".btn-secondary");
 
@@ -142,7 +144,10 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		});
 		this.input = this.$input.get(0);
 		this.has_input = true;
+<<<<<<< HEAD
 		this.translate_values = true;
+=======
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 		var me = this;
 		this.setup_buttons();
 		this.setup_autocomplete();
@@ -152,9 +157,12 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 			});
 		}
 	},
+<<<<<<< HEAD
 	get_options: function() {
 		return this.df.options;
 	},
+=======
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 	setup_buttons: function() {
 		var me = this;
 
@@ -162,6 +170,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 			this.$input_area.find(".link-btn").remove();
 		}
 	},
+<<<<<<< HEAD
 	open_advanced_search: function() {
 		var doctype = this.get_options();
 		if(!doctype) return;
@@ -201,6 +210,10 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		});
 
 		return false;
+=======
+	get_options: function() {
+		return this.df.options;
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 	},
 	setup_autocomplete: function() {
 		var me = this;
@@ -309,11 +322,19 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 					ui.item.action.apply(me);
 				}
 
+<<<<<<< HEAD
 				// if remember_last_selected is checked in the doctype against the field, 
 				// then add this value
 				// to defaults so you do not need to set it again
 				// unless it is changed.
 				if(me.df.remember_last_selected_value) {
+=======
+				// if remember_selected hook is set, add this value
+				// to defaults so you do not need to set it again
+				// unless it is changed.
+				if(frappe.boot.remember_selected
+						&& frappe.boot.remember_selected.indexOf(me.df.options)!==-1) {
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 					frappe.boot.user.last_selected_values[me.df.options] = ui.item.value;
 				}
 
@@ -334,11 +355,15 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 			$(this).autocomplete("close");
 		})
 		.data('ui-autocomplete')._renderItem = function(ul, d) {
+<<<<<<< HEAD
 			var _value = d.value;
 			if(me.translate_values) {
 				_value = __(d.value)
 			}
 			var html = "<strong>" + _value + "</strong>";
+=======
+			var html = "<strong>" + __(d.value) + "</strong>";
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 			if(d.description && d.value!==d.description) {
 				html += '<br><span class="small">' + __(d.description) + '</span>';
 			}
@@ -362,6 +387,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		if(this.get_query || this.df.get_query) {
 			var get_query = this.get_query || this.df.get_query;
 			if($.isPlainObject(get_query)) {
+<<<<<<< HEAD
 				var filters = null;
 				if(get_query.filters) {
 					// passed as {'filters': {'key':'value'}}
@@ -405,6 +431,26 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 						this.translate_values = q.translate_values;
 					}
 
+=======
+				var filters = set_nulls(get_query);
+
+				// extend args for custom functions
+				$.extend(args, filters);
+
+				// add "filters" for standard query (search.py)
+				args.filters = filters;
+			} else if(typeof(get_query)==="string") {
+				args.query = get_query;
+			} else {
+				var q = (get_query)(this.frm && this.frm.doc, this.doctype, this.docname);
+
+				if (typeof(q)==="string") {
+					args.query = q;
+				} else if($.isPlainObject(q)) {
+					if(q.filters) {
+						set_nulls(q.filters);
+					}
+>>>>>>> dbc4408da194cdf7ea2cbda957e073eadb7a3a7f
 					// extend args for custom functions
 					$.extend(args, q);
 

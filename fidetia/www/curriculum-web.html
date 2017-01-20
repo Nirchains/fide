@@ -1,0 +1,86 @@
+{% extends "templates/web.html" %}
+
+{% block title %} {{ "Curriculum" }} {% endblock %}
+
+{% block header %}<h2>{{ _("Curriculum") }}</h2>{% endblock %}
+
+{% block page_content %}
+	<button type="button" class="btn btn-primary hidden" id="nuevo-curriculum" ><i class="octicon octicon-plus"></i> Crear Curriculum</button>
+	<table id="tabla-curriculum" class="table table-striped vertical-align">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellidos</th>
+				<th>Email</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+	<div class="spinner">
+	  <div class="rect1"></div>
+	  <div class="rect2"></div>
+	  <div class="rect3"></div>
+	  <div class="rect4"></div>
+	  <div class="rect5"></div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		var ventana;
+		
+		getCurriculums();
+
+		$("#nuevo-curriculum").click(function () {
+	        show_window('/desk#Form/Curriculum/Nuevo Curriculum 1', 'Curriculum');
+	    });
+
+		function getCurriculums() {
+			$(".spinner").removeClass("hidden");
+			$("#tabla-curriculum tbody").html('');
+			$.ajax({
+				url: '/api/resource/Curriculum?fields=["name","first_name","last_name","email"]',
+				type: "get",
+			}).done(function(response) {
+				$(".spinner").addClass("hidden");
+				var r = response.data;
+				if (r.length > 0) {
+					var $tr;
+					$.each(r, function(i, item) {
+				        $tr = $('<tr>').append(
+				            $('<td>').text(item.first_name),
+				            $('<td>').text(item.last_name),
+				            $('<td>').text(item.email),
+				            $('<td class="text-right">').html('<button type="button" class="btn btn-primary editar-curriculum" id="field' + i + '" data-name="' + item.name + '"><i class="octicon octicon-pencil" ></i> Editar Curriculum</button>')
+				        ).appendTo('#tabla-curriculum tbody');
+				    });
+				} else {
+					$("#nuevo-curriculum").removeClass("hidden");
+					$("#tabla-curriculum").addClass("hidden");
+				}	
+				$(".editar-curriculum").click(function () {
+					var d = $(this);
+					var data = d.data("name");
+			        show_window('/desk#Form/Curriculum/' + data, 'Curriculum');
+			    });			
+			});
+		}
+
+		function show_window(url, title) {
+			ventana = window.open(url, title, 'toolbar=no,scrollbars=yes,resizable=yes,top=10,width=' + (window.innerWidth - 20) + ',height=' + (window.innerHeight - 40) + '');
+			var pollTimer = window.setInterval(function() {
+			    if (ventana.closed !== false) { // !== is required for compatibility with Opera
+			        window.clearInterval(pollTimer);
+			        getCurriculums();
+			    }
+			}, 200);
+		}
+		function show_curriculum(name) {
+			ventana = show_window('/desk#Form/Curriculum/' + name, 'Curriculum');
+		}
+		
+	</script>
+{% endblock %}
